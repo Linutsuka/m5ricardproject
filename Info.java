@@ -1,8 +1,10 @@
 package P1;
 import java.util.Scanner;
+import java.util.Arrays;
 import java.io.RandomAccessFile;
 import java.io.File;
 import java.io.PrintStream;
+import java.util.ArrayList;
 public class Info {
 
 	public static void main(String[] args) {
@@ -12,7 +14,10 @@ public class Info {
 		boolean sortir = true;
 		Scanner lector = new Scanner(System.in);
 		do {
-			System.out.println("Guardar Informació - Menú \n *1*Pilots");
+			System.out.println("Guardar Informació - Menú \n");
+			System.out.println("-----------------\n   *1*Pilots\n   *2*Circuits\n   *3*Curses\n-----------------");
+			
+			
 			String entrar = lector.nextLine();
 			switch(entrar) {
 				case "1":
@@ -76,11 +81,13 @@ public class Info {
 									
 									File f =new File ("C:"+File.separator+"fitxers"+File.separator+"m5pilots.txt");
 									try {
-										registre.guardarPilots(f);
+										ArrayList<String> clonar = new ArrayList<String>();
+										clonar = registre.guardarPilots(f);
 										PrintStream writer = new PrintStream(f);
 										for(int i = 0 ; i < f.length() ; i++ ) {
-											writer.println(pilot + "-" + dorsal + "-" +  numeroTotal +  "-"+equip +"-" + numeroCarreras);
+											writer.println(clonar.get(i));
 										}
+										writer.println(pilot + "-" + dorsal + "-" +  numeroTotal +  "-"+equip +"-" + numeroCarreras);
 										writer.println("endFile");
 										
 									}
@@ -88,9 +95,79 @@ public class Info {
 										System.out.print("**Error el .java Info");
 									}
 						}
-						
 					}
 					break;
+				case"2":
+					System.out.println("Benvolgut a Guardar Informació Circuits per sortir escriu la paraula 'sortir'");
+					word = lector.nextLine().toLowerCase();
+					while(!(word.equals("sortir"))) {
+						System.out.println("Introdueix nom del Circuit");
+						String nomCircuit = lector.nextLine();
+						word = nomCircuit;
+						if(!(word.equalsIgnoreCase("sortir"))) {
+							System.out.println("Introdueix el ID de " + nomCircuit);
+							String id = lector.nextLine();	
+							
+							System.out.println("**Introduint l'informació següent**\n " + nomCircuit + " - " + id);
+							//CANVIAR NOM DEL ARXIU
+							File f =new File ("C:"+File.separator+"fitxers"+File.separator+"m5pilots.txt");
+							try {
+								ArrayList<String> clonar = new ArrayList<String>();
+								clonar = registre.guardarCircuit(f);
+								PrintStream writer = new PrintStream(f);
+								for(int i = 0 ; i < f.length() ; i++ ) {
+									writer.println(clonar.get(i));
+								}
+								writer.println(nomCircuit + "-" + id);
+								writer.println("endFile");
+								
+							}
+							catch(Exception e) {
+								System.out.print("**Error el .java Info");
+							}
+						}
+					}
+				case"3"://CURSES
+					System.out.println("Benvolgut a Guardar Informació Curses per sortir escriu la paraula 'sortir'");
+					word = lector.nextLine().toLowerCase();
+					File f =new File ("C:"+File.separator+"fitxers"+File.separator+"m5pilots.txt");
+					while(!(word.equals("sortir"))) {
+						System.out.println("Introdueix nom de la Cursa");
+						String nomCursa = lector.nextLine();
+						word = nomCursa;
+						if(!(word.equalsIgnoreCase("sortir"))) {
+							System.out.println("Introdueix ID de " + nomCursa);
+							String idCursa = lector.nextLine();
+							System.out.println("Introdueix Data de la cursa DD/MM/YYYY");
+							String dataCursa = lector.nextLine();
+							System.out.println("Introdueix ID del Circuit");
+							System.out.println(registre.guardarCurses(f));
+							String idCurses = lector.nextLine();
+							int j = 0;
+							ArrayList<String> curses = new ArrayList<String>();
+							curses = registre.guardarCurses(f);
+							boolean existeix = false;
+							while(!(existeix)) {
+								String[] idCi =  new String[curses.size()];
+								while(j < curses.size()) {
+									String nom = curses.get(j);
+									String separator[] = nom.split("-");
+									idCi[j] = separator[1];
+									j++;
+								}
+								System.out.println("Introdueix ID del Circuit");
+								idCurses = lector.nextLine();
+								while(j < curses.size()) {
+									if(Arrays.asList(idCi).contains((idCurses))) {
+										existeix = true;
+									}
+									j++;
+								}
+							}
+						}
+						
+					}
+					
 					
 			}
 		}
