@@ -14,20 +14,24 @@ public class Llistar {
 			case"1"://PILOTS
 				File f =new File ("C:"+File.separator+"fitxers"+File.separator+"m5pilots.txt");
 				int k = 0;
-				while(k < f.length() ) {
-					try {
-				Scanner reader = new Scanner(f);
-				String word = reader.nextLine();
-					if(!(word.equalsIgnoreCase("sortir"))){
-							System.out.println(word);
+				
+				try {
+					Scanner reader = new Scanner(f);
+					while(k < f.length() ) {
+				
+						
+						String word = reader.nextLine();
+							if(!(word.equalsIgnoreCase("endFile"))){
+								System.out.println(word);
 							
-						}
-					k++;
+							}
+							
+							k++;
 					}
-					catch(Exception e) {
-						System.out.println("Error llistar.java");
-					}
-				}	
+				}
+				catch(Exception e) {
+					System.out.println("Error llistar.java");
+				}
 			}	
 		}
 		while(sortir);
