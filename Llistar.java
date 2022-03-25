@@ -13,11 +13,22 @@ public class Llistar {
 			switch(entrar) {
 			case"1"://PILOTS
 				File f =new File ("C:"+File.separator+"fitxers"+File.separator+"m5pilots.txt");
-				System.out.println(registre.guardarPilots(f));
-				
-			}
-			
-			
+				int k = 0;
+				while(k < f.length() ) {
+					try {
+				Scanner reader = new Scanner(f);
+				String word = reader.nextLine();
+					if(!(word.equalsIgnoreCase("sortir"))){
+							System.out.println(word);
+							
+						}
+					k++;
+					}
+					catch(Exception e) {
+						System.out.println("Error llistar.java");
+					}
+				}	
+			}	
 		}
 		while(sortir);
 	}
